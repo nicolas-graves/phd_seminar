@@ -1,0 +1,98 @@
+
+* Code and development
+
+The topic of next week is: Code and development
+  - How do you keep track of what you implement?
+  - Do you have ressources you would like to share?
+  - How do you choose a coding language?
+  - What are your version controlling hacks?
+  - How do you collaborate on your projects?
+  - How do you approach branching?
+  - How do you document your projects?
+  - How do you write tests?…
+
+If you wish to present and discuss (part of) your own coding workflow, let us know by answering this email and/or by preparing a short intervention (~5min each).
+
+** General context
+Linux-only (10 years), Emacs for 3-4 years
+At scale (>1000 commits a year)
+But tools are not perfect, a big chunk of those commits is to improve tools or integration
+
+** Text editors
+Powerful features take time to master.
+Promising developments : LSP (live static code analysis), DAP (debugging editor API), Tree-sitter (structural highlighting and editing)
+--> All progressing rapidly.  Choose one good and stick to it.
+
+** Version control
+- Git + Magit : very powerful but take months to get used to.
+  [Demonstration]
+- Some hacks : SVN-like git : [[https://www.youtube.com/watch?v=2uEqYw-N8uE][git worktrees]]
+- Patched dependencies in code : git submodules + =-e lib/sdmx= in =requirements.txt=
+
+** Handy tool : Makefiles
+*** Often repeated commands, hard to remember
+
+#+begin_src makefile
+genlib:
+	$(PREFIX) scilab-cli -e "genlib(\"imaclimr\", \"lib\");exit;"
+#+end_src
+
+--> =make genlib=
+
+*** Generated files
+
+#+begin_src makefile
+$(ORIGIN)/outputs/%__$(BRANCH)_$(COMMIT)/:
+	$(PREFIX) scilab-cli $(INTERACTION) -e "combi=$*;chdir('model');exec('imaclimr.sce');exit;" $(REDIRECT_LOG)
+#+end_src
+
+*** Multithreading in Makefiles
+Notably when running multiple scenarii
+
+#+begin_src makefile
+# Guess the number of processors to use, and setup output accordingly.
+NPROCS := $(words $(shell echo $(COMBIS))) # number of combis to run
+REDIRECT_LOG :=
+INTERACTION :=
+ifneq ($(strip $(NPROCS)), 1)
+	NPROCS := $(shell nproc --ignore=1) # max number of processors to use
+	REDIRECT_LOG := >/dev/null
+	INTERACTION := -nwni
+endif
+
+ifneq ($(filter -j,$(MAKEFLAGS)) && echo true,)
+  MAKEFLAGS += -j$(NPROCS)
+endif
+#+end_src
+
+** Reproducible environments
+GNU Guix (Linux-only) : [[id:4b8491a6-f317-44c2-97bf-aa3971d9d8d6][Guix Projects]]
+Envrc : generalist, usually good to setup environments (virtualenv, guix or other)
+
+** Testing
+
+Linters (in all programming languages): Improve code quality without much costs.
+
+Unittests for functions that are often used / essential.
+[IMO, AI is usually better at writing unittests than code.]
+
+For Python:
+ - typing : mypy --> describe types used.
+   For clarity and debugging, not performance (Soon : Mojo ?)
+ - unittests : pytest
+
+** Ressources
+*** Documentation
+https://devdocs.io/
+
+*** Creators
+- keep up to date : Fireship (small 3-5 min videos, 1/2 times a week)
+- Some interesting creators (selectively) : PrimeAgen / PrimeTime (generalist, 30-60 min podcasts) ; Luke Smith (Linux minimalism BUT hard right) ; Protesilaos Stavrou (Emacs)
+
+** Things I'm still investigating / improving
+- Dynamic coding / development : Jupyter / NREPL
+- Debugging : =dap= / =pydevd=
+- Good =symbol-lookup= / documentation link for most programming languages.
+- AI integration : How to make that adapted ?
+
+Would like to learn Julia
