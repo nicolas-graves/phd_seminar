@@ -113,6 +113,7 @@ For Python:
  - typing : mypy --> describe types used.
    For clarity and debugging, not performance (Soon : Mojo ?)
  - unittests : pytest
+ - diffoscope
 
 ** Ressources
 *** Documentation
