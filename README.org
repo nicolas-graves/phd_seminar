@@ -13,25 +13,22 @@ The topic of next week is: Code and development
 
 If you wish to present and discuss (part of) your own coding workflow, let us know by answering this email and/or by preparing a short intervention (~5min each).
 
-** General context
-Linux-only (10 years), Emacs for 3-4 years
-At scale (>1000 commits a year)
-But tools are not perfect, a big chunk of those commits is to improve tools or integration
+** Context
+- Linux-only (10 years), Emacs for 3-4 years
+- At scale (>1000 commits a year)
+- But tools are not perfect, a big chunk of those commits is to improve tools or integration
 
 ** Text editors
-Powerful features take time to master.
-Promising developments : LSP (live static code analysis), DAP (debugging editor API), Tree-sitter (structural highlighting and editing)
+- Powerful features take time to master.
+- Promising developments : LSP (live static code analysis), DAP (debugging editor API), Tree-sitter (structural highlighting and editing)
 --> All progressing rapidly.  Choose one good and stick to it.
 
 ** Version control
 - Git + Magit : very powerful but take months to get used to.
-  [Demonstration]
-- Some hacks : branching model like Imaclim team: SVN-like git : [[https://www.youtube.com/watch?v=2uEqYw-N8uE][git worktrees]]
-- Patched dependencies in code : git submodules + =-e lib/sdmx= in =requirements.txt=
+- branching model like Imaclim team: SVN-like git : [[https://www.youtube.com/watch?v=2uEqYw-N8uE][git worktrees]]
+- Patched dependencies in code : git submodules + =-e lib/library= in =requirements.txt=
   See https://github.com/CIRED/IMACLIM-R_France/blob/main/data/requirements.txt
-
-- Taking notes on commits : see =git notes=
-  https://git-scm.com/docs/git-notes
+- Taking notes on commits : see [[https://git-scm.com/docs/git-notes][git-notes]]
 
 ** Handy tool : Makefiles
 *** Often repeated commands, hard to remember
@@ -81,18 +78,18 @@ The basic four commands highlighted in this video are the following :
 - =guix time-machine= replay software versions
 - =guix pull= updates Guix with all its packages
 
-  #+begin_src scheme
-  ;; channels.scm
-  (list (channel
-        (name 'guix)
-        (url "https://git.savannah.gnu.org/git/guix.git")
-        (commit "1984d56b0e437af7be7fa6cf8e1a00e45eb8ffa1")
-        (introduction
-          (make-channel-introduction
-            "9edb3f66fd807b096b48283debdcddccfea34bad"
-            (openpgp-fingerprint
-              "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA")))))
-  #+end_src
+#+begin_src scheme
+;; channels.scm
+(list (channel
+      (name 'guix)
+      (url "https://git.savannah.gnu.org/git/guix.git")
+      (commit "1984d56b0e437af7be7fa6cf8e1a00e45eb8ffa1")
+      (introduction
+        (make-channel-introduction
+          "9edb3f66fd807b096b48283debdcddccfea34bad"
+          (openpgp-fingerprint
+            "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA")))))
+#+end_src
 
 #+begin_src scheme
 ;; manifest.scm
@@ -100,20 +97,26 @@ The basic four commands highlighted in this video are the following :
  '("python"))
 #+end_src
 
-Envrc : generalist, usually good to setup environments (virtualenv, guix or other)
+*** direnv
+https://direnv.net/
+generalist, usually good to setup environments (virtualenv, guix or other)
 
 ** Testing
 
-Linters (in all programming languages): Improve code quality without much costs.
+*** Linters
+(in all programming languages)
+Improve code quality without much costs.
 
-Unittests for functions that are often used / essential.
-[IMO, AI is usually better at writing unittests than code.]
+For Python: Many complementary. See in particular [[https://black.readthedocs.io][black]] (formatter), [[https://flake8.pycqa.org][flake8]], [[https://www.mypy-lang.org][mypy]] (python typing)
 
-For Python:
- - typing : mypy --> describe types used.
-   For clarity and debugging, not performance (Soon : Mojo ?)
- - unittests : pytest
- - diffoscope
+*** Unittests
+Use them for functions that are often used / essential.
+[AI is usually better at writing unittests than code!]
+
+For Python: see [[https://pytest.org][pytest]]
+
+*** Comparing run results
+One handy command-line tool : [[https://diffoscope.org][diffoscope]]
 
 ** Ressources
 *** Documentation
@@ -128,5 +131,3 @@ https://devdocs.io/
 - Debugging : =dap= / =pydevd=
 - Good =symbol-lookup= / documentation link for most programming languages.
 - AI integration : How to make that adapted ?
-
-Would like to learn Julia
