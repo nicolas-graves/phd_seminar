@@ -68,6 +68,35 @@ endif
 
 ** Reproducible environments
 GNU Guix (Linux-only) : [[id:4b8491a6-f317-44c2-97bf-aa3971d9d8d6][Guix Projects]]
+
+Packages are frozen with the use of the file =channels.scm=. Packages that are needed in a Guix profile are declared in =manifest.scm=. These two files combined with some command line commands are able to guarantee the code written will *always* be able to run in the same environment (provided one can install GNU guix on its machine). Guix is a relatively new tool already used by several scientists. See  https://10years.guix.gnu.org/video/guix-as-a-tool-for-computational-science/ to see how to use it for computational science.
+
+The basic four commands highlighted in this video are the following :
+
+- =guix shell= run in a controlled environment
+- =guix describe= record software services
+- =guix time-machine= replay software versions
+- =guix pull= updates Guix with all its packages
+
+  #+begin_src scheme
+  ;; channels.scm
+  (list (channel
+        (name 'guix)
+        (url "https://git.savannah.gnu.org/git/guix.git")
+        (commit "1984d56b0e437af7be7fa6cf8e1a00e45eb8ffa1")
+        (introduction
+          (make-channel-introduction
+            "9edb3f66fd807b096b48283debdcddccfea34bad"
+            (openpgp-fingerprint
+              "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA")))))
+  #+end_src
+
+#+begin_src scheme
+;; manifest.scm
+(specifications->manifest
+ '("python"))
+#+end_src
+
 Envrc : generalist, usually good to setup environments (virtualenv, guix or other)
 
 ** Testing
