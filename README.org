@@ -30,6 +30,9 @@ Promising developments : LSP (live static code analysis), DAP (debugging editor 
 - Patched dependencies in code : git submodules + =-e lib/sdmx= in =requirements.txt=
   See https://github.com/CIRED/IMACLIM-R_France/blob/main/data/requirements.txt
 
+- Taking notes on commits : see =git notes=
+  https://git-scm.com/docs/git-notes
+
 ** Handy tool : Makefiles
 *** Often repeated commands, hard to remember
 
