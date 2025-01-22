@@ -26,8 +26,9 @@ Promising developments : LSP (live static code analysis), DAP (debugging editor 
 ** Version control
 - Git + Magit : very powerful but take months to get used to.
   [Demonstration]
-- Some hacks : SVN-like git : [[https://www.youtube.com/watch?v=2uEqYw-N8uE][git worktrees]]
+- Some hacks : branching model like Imaclim team: SVN-like git : [[https://www.youtube.com/watch?v=2uEqYw-N8uE][git worktrees]]
 - Patched dependencies in code : git submodules + =-e lib/sdmx= in =requirements.txt=
+  See https://github.com/CIRED/IMACLIM-R_France/blob/main/data/requirements.txt
 
 ** Handy tool : Makefiles
 *** Often repeated commands, hard to remember
